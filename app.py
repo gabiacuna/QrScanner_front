@@ -1,17 +1,7 @@
 import os
 from flask import Flask, render_template, jsonify, request, abort
 
-app = Flask(__name__, template_folder='.', static_url_path='/src', static_folder='src')
-
-# Google Sheets API Setup
-import gspread
-from google.oauth2.credentials import Credentials
-
-if os.path.exists('credentials.json'):
-    credential = Credentials.from_authorized_user_file("credentials.json",
-                                                              ['https://www.googleapis.com/auth/spreadsheets.readonly'])
-client = gspread.authorize(credential)
-gsheet = client.open("Información de contacto (Respuestas)")
+app = Flask(__name__, template_folder='.', static_url_path='/static', static_folder='static')
 
 # prevent cached responses
 if app.config["DEBUG"]:
@@ -21,19 +11,6 @@ if app.config["DEBUG"]:
         response.headers["Expires"] = 0
         response.headers["Pragma"] = "no-cache"
         return response
-
-# An example GET Route to get all reviews
-@app.route('/all_reviews', methods=["GET"])
-def all_reviews():
-    return jsonify(gsheet.get_all_records())
-
-# An example POST Route to add a review
-@app.route('/add_review', methods=["POST"])
-def add_review():
-    req = request.get_json()
-    row = [req["rut"]]
-    gsheet.insert_row(row, 3)  # since the first row is our title header
-    return jsonify(gsheet.get_all_records())
 
 @app.route('/')
 def index():

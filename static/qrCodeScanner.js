@@ -11,16 +11,26 @@ const btnScanQR = document.getElementById("btn-scan-qr");
 
 let scanning = false;
 
-my_qrcode.callback = (res) => {
+my_qrcode.callback = async (res) => {
   if (res) {
     const match = res.match(re);
     if (match) {
       const runNumber = match[1];
       console.log(runNumber);
-      outputData.innerText = runNumber;
+      const response = await fetch("http://127.0.0.1:3000/validate?"+ new URLSearchParams({rut:runNumber}), {method: "GET", headers: {"Content-Type": "application/json"}});
+      const validate = await response;
+      console.log(validate.status);
+      if (validate.status === 200) {
+        outputData.innerText = "Valido";
+        document.body.style.background = "Chartreuse";
+      } else {
+        outputData.innerText = "No valido";
+        document.body.style.background = "Crimson";
+      }
     } else {
-      console.log("RUN number not found.");
-      outputData.innerText = res;
+      console.log("Código QR no válido");
+      outputData.innerText = "Código QR no válido";
+      document.body.style.background = "Black";
     }
     scanning = false;
 
@@ -35,6 +45,7 @@ my_qrcode.callback = (res) => {
 };
 
 btnScanQR.onclick = () => {
+  document.body.style.background = "Black";
   navigator.mediaDevices
     .getUserMedia({ video: { facingMode: "environment" } })
     .then(function (stream) {
