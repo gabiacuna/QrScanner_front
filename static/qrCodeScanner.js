@@ -17,7 +17,7 @@ my_qrcode.callback = async (res) => {
     if (match) {
       const runNumber = match[1];
       console.log(runNumber);
-      const response = await fetch("http://127.0.0.1:8000/validate?"+ new URLSearchParams({rut:runNumber}), {method: "GET", headers: {"Content-Type": "application/json"}});
+      const response = await fetch("http://gabigabi.xyz:8000/validate?"+ new URLSearchParams({rut:runNumber}), {method: "GET", headers: {"Content-Type": "application/json"}});
       const validate = await response;
       console.log(validate.status);
       if (validate.status === 200) {
