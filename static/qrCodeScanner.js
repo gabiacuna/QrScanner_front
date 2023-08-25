@@ -45,26 +45,20 @@ my_qrcode.callback = async (res) => {
 };
 
 btnScanQR.onclick = () => {
-  document.body.style.background = "Black";
-  navigator.permissions.query({ name: "camera" }).then((result) => {
-    if (result.state === "granted") {
-      navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: "environment" } })
-        .then(function (stream) {
-          scanning = true;
-          qrResult.hidden = true;
-          btnScanQR.hidden = true;
-          canvasElement.hidden = false;
-          video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-          video.srcObject = stream;
-          video.play();
-          tick();
-          scan();
-        });
-    } else if (result.state === "prompt") {
-      alert("Debe permitir el acceso a la cámara para poder escanear el código QR");
-    }
-  });
+  document.body.style.background = "Black";    
+  navigator.mediaDevices
+    .getUserMedia({ video: { facingMode: "environment" } })
+    .then(function (stream) {
+      scanning = true;
+      qrResult.hidden = true;
+      btnScanQR.hidden = true;
+      canvasElement.hidden = false;
+      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+      video.srcObject = stream;
+      video.play();
+      tick();
+      scan();
+    });
 }; 
 
 function tick() {
