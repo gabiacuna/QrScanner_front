@@ -19,7 +19,7 @@ my_qrcode.callback = async (res) => {
       console.log(runNumber);
       var form = new FormData();
       form.append("rut", runNumber);
-      const response = await fetch("https://gabigabi.xyz:8000/validate", {method: "POST", headers: {"Content-Type": "application/json"}, body:form});
+      const response = await fetch("https://gabigabi.xyz:8000/validate", {method: "POST", body: form, redirect: 'follow'});
       const validate = await response;
       console.log(validate.json());
       if (validate.status === 200) {
