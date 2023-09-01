@@ -22,12 +22,18 @@ my_qrcode.callback = async (res) => {
       const response = await fetch("https://gabigabi.xyz:8000/validate", {method: "POST", body: form, redirect: 'follow'});
       const validate = await response;
       console.log(validate.json());
+      result = await validate.json();
       if (validate.status === 200) {
-        outputData.innerText = "Valido";
-        document.body.style.background = "Chartreuse";
+        if (result.result == "yes"){
+          outputData.innerText = "Valido " + result.user_type;
+          document.body.style.background = "Chartreuse";
+        } else {
+          outputData.innerText = "No valido";
+          document.body.style.background = "Crimson";
+        }
       } else {
-        outputData.innerText = "No valido";
-        document.body.style.background = "Crimson";
+        outputData.innerText = "Error";
+        document.body.style.background = "Black";
       }
     } else {
       console.log("Código QR no válido");
