@@ -22,5 +22,6 @@ async function sendData() {
     }
 }
 
-
-form.addEventListener("submit", () => sendData(), false);
+if (form){
+    form.addEventListener("submit", () => sendData(), false);
+}
