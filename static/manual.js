@@ -1,5 +1,5 @@
 const manualResult = document.getElementById("manual-result");
-const outputData = document.getElementById("outputDataManual");
+const outputDataManual = document.getElementById("outputDataManual");
 const form = document.getElementById("manual_input");
 
 async function sendData() {
@@ -10,14 +10,14 @@ async function sendData() {
     result = await validate.json();
     if (validate.status === 200) {
         if (result.result == "yes"){
-            outputData.innerText = "Valido " + result.user_type;
+            outputDataManual.innerText = "Valido " + result.user_type;
             document.body.style.background = "Chartreuse";
         } else {
-            outputData.innerText = "No valido";
+            outputDataManual.innerText = "No valido";
             document.body.style.background = "Crimson";
         }
     } else {
-    outputData.innerText = "Error";
+    outputDataManual.innerText = "Error";
     document.body.style.background = "Black";
     }
 }
