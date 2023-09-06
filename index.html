@@ -12,7 +12,7 @@
     <div id="container">
       <h1>Validación QR Socios Basket UC </h1>
 
-      <button id="btn-scan-qr"> Escanear </button>
+      <button id="btn-scan-qr" class="button-2"> Escanear </button>
 
       <canvas hidden="" id="qr-canvas"></canvas>
 
@@ -20,7 +20,20 @@
         <b>Resultado:</b> <span id="outputData"></span>
       </div>
     </div>
+    <div id="manual">
+      <h1>Ingreso Manual de RUT</h1>
+      <p id="text">Sin puntos y con guión</p>
+      <form name="manual_input">
+        <label for="rut" id="text">Rut:</label>
+        <input type="text" id="rut" name="rut" placeholder="20677154-2"><br><br>
+        <input type="submit" value="Enviar" class="button-2">
+      </form>
+      <div id="manual-result" hidden="">
+        <b>Resultado:</b> <span id="outputDataManual"></span>
+      </div>
+    </div>
 
     <script src="./static/qrCodeScanner.js"></script>
+    <script src="./static/manual.js"></script>
   </body>
 </html>
