@@ -4,7 +4,7 @@ const outputDataManual = document.getElementById("outputDataManual");
 const btnSend = document.getElementById("btn-send-manual");
 const rut = document.getElementById("rut");
 
-btnSend.onclick = async () => {
+async function sendData() {
     const data = new FormData();
     data.append("rut", rut.value);
     console.log(data.get("rut"));
@@ -23,4 +23,8 @@ btnSend.onclick = async () => {
     outputDataManual.innerText = "Error";
     document.body.style.background = "Black";
     }
+}
+
+btnSend.onclick = async () => {
+    sendData();
 }
