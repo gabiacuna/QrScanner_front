@@ -1,30 +1,30 @@
 const manualResult = document.getElementById("manual-result");
 const outputDataManual = document.getElementById("outputDataManual");
+const form = document.getElementById("manual_input");
 
 const btnSend = document.getElementById("btn-send-manual");
 const rut = document.getElementById("rut");
 
-async function sendData() {
-    const data = new FormData();
-    data.append("rut", rut.value);
-    console.log(data.get("rut"));
-    const response = await fetch("https://gabigabi.xyz:8000/validate", {method: "POST", body: data, redirect: 'follow'});
-    const validate = await response;
-    result = await validate.json();
-    if (validate.status === 200) {
-        if (result.result == "yes"){
-            outputDataManual.innerText = "Valido " + result.user_type;
-            document.body.style.background = "Chartreuse";
-        } else {
-            outputDataManual.innerText = "No valido";
-            document.body.style.background = "Crimson";
-        }
-    } else {
-    outputDataManual.innerText = "Error";
-    document.body.style.background = "Black";
-    }
-}
+btnSend.addEventListener("click", function () {
 
-btnSend.onclick = async () => {
-    sendData();
-}
+    const formData = new FormData(form);
+
+    fetch("https://gabigabi.xyz:8000/validate", {
+        method: "POST",
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json(); // Parse the response JSON if needed
+    })
+    .then(data => {
+        // Handle the response data here
+        console.log("Response data:", data);
+    })
+    .catch(error => {
+        // Handle any errors that occurred during the fetch
+        console.error("Fetch error:", error);
+    });
+});
