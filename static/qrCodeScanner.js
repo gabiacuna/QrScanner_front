@@ -9,6 +9,9 @@ const outputData = document.getElementById("outputData");
 let re = new RegExp("RUN=([\\d.-]+)");
 const btnScanQR = document.getElementById("btn-scan-qr");
 
+const form = document.getElementById("manual_input");
+//const btnSend = document.getElementById("btn-send-manual");
+
 let scanning = false;
 
 my_qrcode.callback = async (res) => {
@@ -83,4 +86,11 @@ function scan() {
   } catch (e) {
     setTimeout(scan, 300);
   }
+}
+
+if (form) {
+  form.addEventListener('submit', (event) => {
+      console.log('clicked');
+      console.log(form.elements['rut'])     
+  });
 }
