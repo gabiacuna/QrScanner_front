@@ -89,8 +89,10 @@ function scan() {
 }
 
 if (form) {
-  form.addEventListener('submit', (event) => {
-      console.log('clicked');
-      console.log(form.elements['rut'])     
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    console.log('clicked');
+    const payload = new FormData(form);
+    console.log([...payload])     
   });
 }
