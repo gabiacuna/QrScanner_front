@@ -13,6 +13,7 @@ const btnScanQR = document.getElementById("btn-scan-qr");
 const form = document.getElementById("manual_input");
 const formResult = document.getElementById("manual-result")
 const outputDataManual = document.getElementById("outputDataManual");
+const manual = document.getElementById("manual");
 
 if (form) {
   form.addEventListener('submit', function(e) {
@@ -91,6 +92,7 @@ my_qrcode.callback = async (res) => {
     qrResult.hidden = false;
     canvasElement.hidden = true;
     btnScanQR.hidden = false;
+    manual.hidden = false;
   }
 };
 
@@ -103,6 +105,7 @@ btnScanQR.onclick = () => {
       qrResult.hidden = true;
       btnScanQR.hidden = true;
       canvasElement.hidden = false;
+      manual.hidden = true;
       video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       video.srcObject = stream;
       video.play();
