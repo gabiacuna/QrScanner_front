@@ -13,10 +13,10 @@
       <img src="./static/logo.jpg" alt="" id="logo">
     <div id="container">
       <h1>Validación QR Socios Basket UC </h1>
-
-      <button id="btn-scan-qr" class="button-2"> Escanear </button>
-
+      
       <canvas hidden="" id="qr-canvas"></canvas>
+      
+      <button id="btn-scan-qr" class="button-2"> Escanear </button>
 
       <div id="qr-result" hidden="">
         <b>Resultado:</b> <span id="outputData"></span>
@@ -25,10 +25,10 @@
     <div id="manual">
       <h1>Ingreso Manual de RUT</h1>
       <p id="text">Sin puntos y con guión</p>
-      <form name="manual_input"  > 
+      <form id="manual_input"> 
         <label for="rut" id="text">Rut:</label>
-        <input type="text" id="rut" name="rut" placeholder="20677154-2"><br><br>
-        <button id="btn-send-manual" type="submit" value="Enviar" class="button-2">
+        <input type="text" name="rut" placeholder="20677154-2"><br><br>
+        <button type="submit" class="button-2">Enviar</button>
       </form>
       <div id="manual-result" hidden="">
         <b>Resultado:</b> <span id="outputDataManual"></span>
@@ -36,6 +36,5 @@
     </div>
 
     <script src="./static/qrCodeScanner.js"></script>
-    <script src="./static/manual.js"></script>
   </body>
 </html>
