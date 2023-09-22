@@ -6,8 +6,51 @@ const canvas = canvasElement.getContext("2d");
 
 const qrResult = document.getElementById("qr-result");
 const outputData = document.getElementById("outputData");
-let re = new RegExp("RUN=([\\d.-]+)");
+let re = new RegExp("RUN=([k\\d.-]+)");
+let re_rut = new RegExp("(\\d{1,2})(\\d{3}){2}-([\\dkK])");
 const btnScanQR = document.getElementById("btn-scan-qr");
+
+const form = document.getElementById("manual_input");
+const formResult = document.getElementById("manual-result")
+const outputDataManual = document.getElementById("outputDataManual");
+const manual = document.getElementById("manual");
+
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    console.log('clicked');
+    
+    const payload = new FormData(form);
+    const rut = payload.get("rut")
+    console.log(rut);
+    const match = rut.match(re_rut);
+    console.log(match);
+    if (match) {
+      fetch("https://gabigabi.xyz:8000/validate", {
+        method: "POST",
+        body: payload,
+        redirect: 'follow'
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.result == "yes"){
+          outputDataManual.innerText = "Valido " + data.user_type;
+          document.body.style.background = "Chartreuse";
+        } else {
+          outputDataManual.innerText = "No valido";
+          document.body.style.background = "Crimson";
+        }
+        formResult.hidden = false;
+        
+      })
+      .catch(err => console.log(err))
+    } else {
+      outputDataManual.innerText = "Rut no válido";
+      document.body.style.background = "Black";
+      formResult.hidden = false;
+    }
+  })
+}
 
 let scanning = false;
 
@@ -32,12 +75,12 @@ my_qrcode.callback = async (res) => {
         }
       } else {
         outputData.innerText = "Error";
-        document.body.style.background = "Black";
+        document.body.style.background = "#0a5da7";
       }
     } else {
       console.log("Código QR no válido");
       outputData.innerText = "Código QR no válido";
-      document.body.style.background = "Black";
+      document.body.style.background = "#0a5da7";
     }
     scanning = false;
 
@@ -48,6 +91,7 @@ my_qrcode.callback = async (res) => {
     qrResult.hidden = false;
     canvasElement.hidden = true;
     btnScanQR.hidden = false;
+    manual.hidden = false;
   }
 };
 
@@ -60,6 +104,7 @@ btnScanQR.onclick = () => {
       qrResult.hidden = true;
       btnScanQR.hidden = true;
       canvasElement.hidden = false;
+      manual.hidden = true;
       video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       video.srcObject = stream;
       video.play();
