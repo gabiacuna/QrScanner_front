@@ -33,12 +33,12 @@ my_qrcode.callback = async (res) => {
         }
       } else {
         outputData.innerText = "Error";
-        document.body.style.background = "Black";
+        document.body.style.background = "#0a5da7";
       }
     } else {
       console.log("Código QR no válido");
       outputData.innerText = "Código QR no válido";
-      document.body.style.background = "Black";
+      document.body.style.background = "#0a5da7";
     }
     scanning = false;
 
