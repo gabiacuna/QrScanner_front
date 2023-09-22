@@ -18,7 +18,6 @@ const manual = document.getElementById("manual");
 if (form) {
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    console.log('clicked');
     
     const payload = new FormData(form);
     const rut = payload.get("rut")
@@ -34,20 +33,22 @@ if (form) {
       .then(res => res.json())
       .then(data => {
         if (data.result == "yes"){
-          outputDataManual.innerText = "Valido " + data.user_type;
+          outputDataManual.innerText = "Valido\n" + rut + "\n" + data.user_type;
           document.body.style.background = "Chartreuse";
         } else {
           outputDataManual.innerText = "No valido";
           document.body.style.background = "Crimson";
         }
+        form.reset();
         formResult.hidden = false;
-        
-      })
+        qrResult.hidden = true;
+    })
       .catch(err => console.log(err))
     } else {
       outputDataManual.innerText = "Rut no válido";
-      document.body.style.background = "Black";
+      document.body.style.background = "#0a5da7";
       formResult.hidden = false;
+      qrResult.hidden = true;
     }
   })
 }
@@ -67,7 +68,7 @@ my_qrcode.callback = async (res) => {
       result = await validate.json();
       if (validate.status === 200) {
         if (result.result == "yes"){
-          outputData.innerText = "Valido " + result.user_type;
+          outputData.innerText = "Valido " + rut + "\n" + result.user_type;
           document.body.style.background = "Chartreuse";
         } else {
           outputData.innerText = "No valido";
@@ -92,6 +93,7 @@ my_qrcode.callback = async (res) => {
     canvasElement.hidden = true;
     btnScanQR.hidden = false;
     manual.hidden = false;
+    formResult.hidden = true;
   }
 };
 
