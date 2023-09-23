@@ -68,7 +68,7 @@ my_qrcode.callback = async (res) => {
       result = await validate.json();
       if (validate.status === 200) {
         if (result.result == "yes"){
-          outputData.innerText = "Valido " + rut + "\n" + result.user_type;
+          outputData.innerText = "Valido " + runNumber + "\n" + result.user_type;
           document.body.style.background = "Chartreuse";
         } else {
           outputData.innerText = "No valido";
